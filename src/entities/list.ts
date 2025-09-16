@@ -16,6 +16,9 @@ export class List {
   @PrimaryGeneratedColumn()
   public id!: number;
 
+  @Column({ type: "int" })
+  public position!: number;
+
   @Column("text")
   public title!: string;
 
