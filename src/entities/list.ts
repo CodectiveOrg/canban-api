@@ -2,35 +2,34 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 
 import { Board } from "@/entities/board";
+import { Item } from "@/entities/item";
 
 @Entity()
-export class User {
+export class List {
   @PrimaryGeneratedColumn()
   public id!: number;
 
   @Column("text")
-  public username!: string;
+  public title!: string;
 
-  @Column("text", { nullable: true })
-  public email!: string;
+  @Column("text")
+  public description!: string;
 
-  @Column("text", { select: false })
-  public password!: string;
+  @ManyToOne(() => Board, (board) => board.lists, { onDelete: "CASCADE" })
+  public board!: Board;
 
-  @Column("text", { nullable: true })
-  public picture!: string | null;
-
-  @OneToMany(() => Board, (board) => board.user, {
+  @OneToMany(() => Item, (item) => item.list, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  public boards!: Board[];
+  public items!: Item[];
 
   @CreateDateColumn({ select: false })
   public createdAt!: Date;
