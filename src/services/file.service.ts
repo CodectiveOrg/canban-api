@@ -1,0 +1,62 @@
+import crypto from "node:crypto";
+import fsSync from "node:fs";
+import fs from "node:fs/promises";
+import path from "node:path";
+
+import { formatFilenamePrefix } from "@/utils/format.utils";
+
+export class FileService {
+  public constructor(private folder: string) {
+    fsSync.mkdirSync(this.folderPath, { recursive: true });
+  }
+
+  private get folderPath(): string {
+    return FileService.generateFolderPath(this.folder);
+  }
+
+  private static generateFolderPath(folder: string): string {
+    return path.join(process.env.FILE_STORAGE_PATH!, folder);
+  }
+
+  public async save(
+    file: Express.Multer.File | undefined,
+  ): Promise<string | null> {
+    if (!file) {
+      return null;
+    }
+
+    const filename =
+      formatFilenamePrefix(new Date()) + "-" + crypto.randomUUID();
+    const fileExtension = file.originalname.split(".").pop();
+    const filenameWithExtension = filename + "." + fileExtension;
+
+    const filePath = path.join(this.folderPath, filenameWithExtension);
+    await fs.writeFile(filePath, file.buffer);
+
+    return filenameWithExtension;
+  }
+
+  public static async load(
+    folder: string,
+    filename: string,
+  ): Promise<string | null> {
+    const folderPath = FileService.generateFolderPath(folder);
+    const filePath = path.join(folderPath, filename);
+
+    try {
+      await fs.access(filePath);
+      return filePath;
+    } catch {
+      return null;
+    }
+  }
+
+  public async remove(filename: string | null): Promise<void> {
+    if (!filename) {
+      return;
+    }
+
+    const filePath = path.join(this.folderPath, filename);
+    await fs.rm(filePath, { force: true });
+  }
+}
