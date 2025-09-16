@@ -1,3 +1,6 @@
 import { User } from "@/entities/user";
 
-export type SeedUserType = Omit<User, "id" | "createdAt" | "updatedAt">;
+export type SeedUserType = Pick<
+  User,
+  "username" | "email" | "password" | "picture"
+>;
