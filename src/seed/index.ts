@@ -1,4 +1,6 @@
 import "dotenv/config";
+import "reflect-metadata";
+
 import { UserSeeder } from "@/seed/seeders/user.seeder";
 
 import { DatabaseService } from "@/services/database.service";

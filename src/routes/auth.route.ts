@@ -1,14 +1,14 @@
 import { Router } from "express";
 
+import { container } from "tsyringe";
+
 import { AuthController } from "@/controllers/auth.controller";
 
 import { authMiddleware } from "@/middlewares/auth.middleware";
 
-import { DatabaseService } from "@/services/database.service";
-
-export function generateAuthRoutes(databaseService: DatabaseService): Router {
+export function generateAuthRoutes(): Router {
   const router = Router();
-  const controller = new AuthController(databaseService);
+  const controller = container.resolve(AuthController);
 
   router.post("/sign-in", controller.signIn);
   router.post("/sign-up", controller.signUp);

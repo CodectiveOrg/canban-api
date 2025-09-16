@@ -1,7 +1,10 @@
 import { Request, RequestHandler, Response } from "express";
 
+import { injectable } from "tsyringe";
+
 import { FileService } from "@/services/file.service";
 
+@injectable()
 export class PublicController {
   public getPicture(folder: string): RequestHandler {
     async function getPicture(req: Request, res: Response): Promise<void> {

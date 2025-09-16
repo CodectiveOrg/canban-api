@@ -1,10 +1,12 @@
+import "dotenv/config";
+import "reflect-metadata";
+
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 
-import "dotenv/config";
-import "reflect-metadata";
+import { container } from "tsyringe";
 
 import { globalErrorHandler } from "@/handlers/global-error.handler";
 
@@ -28,14 +30,16 @@ async function main(): Promise<void> {
     return;
   }
 
+  container.register(DatabaseService, { useValue: databaseService });
+
   const app = express();
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(cors({ origin: true, credentials: true }));
 
-  app.use("/api/auth", generateAuthRoutes(databaseService));
+  app.use("/api/auth", generateAuthRoutes());
   app.use("/api/public", generatePublicRoutes());
-  app.use("/api/user", generateUserRoutes(databaseService));
+  app.use("/api/user", generateUserRoutes());
 
   app.use(globalErrorHandler);
 
