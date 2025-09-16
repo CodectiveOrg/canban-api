@@ -1,4 +1,4 @@
-# Canban
+# Canban API
 
 ## Environment Variables
 
