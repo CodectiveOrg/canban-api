@@ -20,6 +20,9 @@ export class Item {
   @Column("text")
   public description!: string;
 
+  @Column({ type: "timestamp", nullable: true })
+  public dueDate?: Date;
+
   @ManyToOne(() => List, (list) => list.items, { onDelete: "CASCADE" })
   public list!: List;
 

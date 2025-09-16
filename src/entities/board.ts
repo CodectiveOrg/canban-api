@@ -11,6 +11,8 @@ import {
 import { List } from "@/entities/list";
 import { User } from "@/entities/user";
 
+import { BOARD_COLORS, BoardColor } from "@/types/board-color.type";
+
 @Entity()
 export class Board {
   @PrimaryGeneratedColumn()
@@ -21,6 +23,13 @@ export class Board {
 
   @Column("text")
   public description!: string;
+
+  @Column({
+    type: "enum",
+    enum: BOARD_COLORS,
+    default: BOARD_COLORS[0],
+  })
+  public color!: BoardColor;
 
   @ManyToOne(() => User, (user) => user.boards, { onDelete: "CASCADE" })
   public user!: User;
