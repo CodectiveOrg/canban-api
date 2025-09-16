@@ -1,6 +1,9 @@
 import { DataSource } from "typeorm";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+import { Board } from "@/entities/board";
+import { Item } from "@/entities/item";
+import { List } from "@/entities/list";
 import { User } from "@/entities/user";
 
 export class DatabaseService {
@@ -10,7 +13,7 @@ export class DatabaseService {
     this.dataSource = new DataSource({
       type: "postgres",
       url: process.env.DATABASE_URL!,
-      entities: [User],
+      entities: [Board, Item, List, User],
       synchronize: true,
       logging: false,
       ...options,
