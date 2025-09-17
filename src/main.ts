@@ -14,6 +14,7 @@ import { authMiddleware } from "@/middlewares/auth.middleware";
 
 import { generateAuthRoutes } from "@/routes/auth.route";
 import { generateBoardRoutes } from "@/routes/board.route";
+import { generateItemRoutes } from "@/routes/item.route";
 import { generateListRoutes } from "@/routes/list.route";
 import { generatePublicRoutes } from "@/routes/public.route";
 import { generateUserRoutes } from "@/routes/user.route";
@@ -39,6 +40,7 @@ async function main(): Promise<void> {
 
   app.use("/api/auth", generateAuthRoutes());
   app.use("/api/board", authMiddleware, generateBoardRoutes());
+  app.use("/api/item", authMiddleware, generateItemRoutes());
   app.use("/api/list", authMiddleware, generateListRoutes());
   app.use("/api/public", generatePublicRoutes());
   app.use("/api/user", authMiddleware, generateUserRoutes());
