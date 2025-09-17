@@ -1,5 +1,3 @@
-import { injectable } from "tsyringe";
-
 import { DataSource } from "typeorm";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
@@ -8,7 +6,6 @@ import { Item } from "@/entities/item";
 import { List } from "@/entities/list";
 import { User } from "@/entities/user";
 
-@injectable()
 export class DatabaseService {
   public dataSource: DataSource;
 

@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 
-import { injectable } from "tsyringe";
-
 import { Like, Repository } from "typeorm";
 
 import { z } from "zod";
@@ -24,7 +22,6 @@ import {
 } from "@/utils/auth.utils";
 import { mapToTokenPayload } from "@/utils/mapper.utils";
 
-@injectable()
 export class AuthController {
   private readonly userRepo: Repository<User>;
 

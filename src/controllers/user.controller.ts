@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 
-import { injectable } from "tsyringe";
-
 import { Repository } from "typeorm";
 
 import { z } from "zod";
@@ -22,7 +20,6 @@ import { fetchUserFromToken } from "@/utils/api.utils";
 import { hashPassword } from "@/utils/auth.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
 
-@injectable()
 export class UserController {
   private readonly fileService: FileService;
 

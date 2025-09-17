@@ -1,7 +1,6 @@
-import "dotenv/config";
-import "reflect-metadata";
-
 import fs from "node:fs/promises";
+
+import "dotenv/config";
 
 import { DatabaseService } from "@/services/database.service";
 
