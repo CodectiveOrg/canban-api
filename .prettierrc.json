@@ -1,6 +1,7 @@
 {
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
+    "^(reflect-metadata|dotenv)(/(.*))?$",
     "^(node:.+)(/(.*))?$",
     "^(express|body-parser|cookie-parser|cors)(/(.*))?$",
     "^typeorm(/(.*))?$",
@@ -8,7 +9,6 @@
     "^file-type(/(.*))?$",
     "^(jsonwebtoken|bcrypt)(/(.*))?$",
     "^zod(/(.*))?$",
-    "^(reflect-metadata|dotenv)(/(.*))?$",
     "<THIRD_PARTY_MODULES>",
     "^@/controllers",
     "^@/dto",
