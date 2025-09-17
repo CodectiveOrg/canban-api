@@ -1,10 +1,10 @@
+import "dotenv/config";
+import "reflect-metadata";
+
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
-
-import "dotenv/config";
-import "reflect-metadata";
 
 import { globalErrorHandler } from "@/handlers/global-error.handler";
 

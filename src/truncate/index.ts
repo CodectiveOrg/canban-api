@@ -1,6 +1,6 @@
-import fs from "node:fs/promises";
-
 import "dotenv/config";
+
+import fs from "node:fs/promises";
 
 import { DatabaseService } from "@/services/database.service";
 
