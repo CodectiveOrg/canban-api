@@ -13,7 +13,6 @@ import { GetUserResponseDto } from "@/dto/user-response.dto";
 
 import { User } from "@/entities/user";
 
-import { DatabaseService } from "@/services/database.service";
 import { FileService } from "@/services/file.service";
 
 import { fetchUserFromToken } from "@/utils/api.utils";
@@ -28,7 +27,7 @@ export class UserController {
   public constructor() {
     this.fileService = new FileService("user");
 
-    this.userRepo = DatabaseService.dataSource.getRepository(User);
+    this.userRepo = dataSource.getRepository(User);
 
     this.getUser = this.getUser.bind(this);
     this.updateUser = this.updateUser.bind(this);

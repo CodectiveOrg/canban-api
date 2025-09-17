@@ -2,7 +2,7 @@ import "dotenv/config";
 
 import fs from "node:fs/promises";
 
-import { DatabaseService } from "@/services/database.service";
+import { CanbanDataSource } from "@/database/canban.data-source";
 
 import { validateEnv } from "@/utils/env.utils";
 
@@ -11,12 +11,12 @@ async function main(): Promise<void> {
 
   console.log("Starting drop and sync...");
 
-  const databaseService = new DatabaseService({
+  globalThis.dataSource = new CanbanDataSource({
     synchronize: true,
     dropSchema: true,
   });
 
-  const isDatabaseInitialized = await databaseService.init();
+  const isDatabaseInitialized = await dataSource.init();
 
   if (!isDatabaseInitialized) {
     return;
@@ -26,7 +26,7 @@ async function main(): Promise<void> {
 
   await wipeFileStorage();
 
-  await DatabaseService.dataSource.destroy();
+  await dataSource.destroy();
 }
 
 async function wipeFileStorage(): Promise<void> {

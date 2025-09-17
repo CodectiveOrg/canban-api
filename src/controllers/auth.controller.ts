@@ -12,8 +12,6 @@ import { ResponseDto } from "@/dto/response.dto";
 
 import { User } from "@/entities/user";
 
-import { DatabaseService } from "@/services/database.service";
-
 import { selectUserWithPassword } from "@/utils/api.utils";
 import {
   comparePasswords,
@@ -26,7 +24,7 @@ export class AuthController {
   private readonly userRepo: Repository<User>;
 
   public constructor() {
-    this.userRepo = DatabaseService.dataSource.getRepository(User);
+    this.userRepo = dataSource.getRepository(User);
 
     this.signUp = this.signUp.bind(this);
     this.signIn = this.signIn.bind(this);

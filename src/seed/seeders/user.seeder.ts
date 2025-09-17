@@ -5,15 +5,13 @@ import { User } from "@/entities/user";
 import { usersData } from "@/seed/data/users.data";
 import { SeedUserType } from "@/seed/types/seed-user.type";
 
-import { DatabaseService } from "@/services/database.service";
-
 import { hashPassword } from "@/utils/auth.utils";
 
 export class UserSeeder {
   private readonly userRepo: Repository<User>;
 
   public constructor() {
-    this.userRepo = DatabaseService.dataSource.getRepository(User);
+    this.userRepo = dataSource.getRepository(User);
   }
 
   public async seed(): Promise<void> {

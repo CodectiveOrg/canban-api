@@ -1,16 +1,16 @@
 import "dotenv/config";
 
-import { UserSeeder } from "@/seed/seeders/user.seeder";
+import { CanbanDataSource } from "@/database/canban.data-source";
 
-import { DatabaseService } from "@/services/database.service";
+import { UserSeeder } from "@/seed/seeders/user.seeder";
 
 import { validateEnv } from "@/utils/env.utils";
 
 async function main(): Promise<void> {
   validateEnv();
 
-  const databaseService = new DatabaseService();
-  const isDatabaseInitialized = await databaseService.init();
+  globalThis.dataSource = new CanbanDataSource();
+  const isDatabaseInitialized = await dataSource.init();
 
   if (!isDatabaseInitialized) {
     return;
@@ -19,7 +19,7 @@ async function main(): Promise<void> {
   await new UserSeeder().seed();
   console.log("");
 
-  await DatabaseService.dataSource.destroy();
+  await dataSource.destroy();
 }
 
 main().then();

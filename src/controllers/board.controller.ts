@@ -14,7 +14,6 @@ import { ResponseDto } from "@/dto/response.dto";
 import { Board } from "@/entities/board";
 import { User } from "@/entities/user";
 
-import { DatabaseService } from "@/services/database.service";
 import { FileService } from "@/services/file.service";
 
 import { fetchUserFromToken } from "@/utils/api.utils";
@@ -29,8 +28,8 @@ export class BoardController {
   public constructor() {
     this.fileService = new FileService("board");
 
-    this.boardRepo = DatabaseService.dataSource.getRepository(Board);
-    this.userRepo = DatabaseService.dataSource.getRepository(User);
+    this.boardRepo = dataSource.getRepository(Board);
+    this.userRepo = dataSource.getRepository(User);
 
     this.createBoard = this.createBoard.bind(this);
     this.getBoard = this.getBoard.bind(this);

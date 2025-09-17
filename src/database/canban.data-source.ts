@@ -6,15 +6,9 @@ import { Item } from "@/entities/item";
 import { List } from "@/entities/list";
 import { User } from "@/entities/user";
 
-export class DatabaseService {
-  public static dataSource: DataSource;
-
+export class CanbanDataSource extends DataSource {
   public constructor(options: Partial<PostgresConnectionOptions> = {}) {
-    if (DatabaseService.dataSource) {
-      return;
-    }
-
-    DatabaseService.dataSource = new DataSource({
+    super({
       type: "postgres",
       url: process.env.DATABASE_URL!,
       entities: [Board, Item, List, User],
@@ -25,12 +19,8 @@ export class DatabaseService {
   }
 
   public async init(): Promise<boolean> {
-    return await this.isConnected();
-  }
-
-  private async isConnected(): Promise<boolean> {
     try {
-      await DatabaseService.dataSource.initialize();
+      await this.initialize();
       console.log("Connection has been established successfully.");
       return true;
     } catch (error) {

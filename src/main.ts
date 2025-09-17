@@ -6,14 +6,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 
+import { CanbanDataSource } from "@/database/canban.data-source";
+
 import { globalErrorHandler } from "@/handlers/global-error.handler";
 
 import { generateAuthRoutes } from "@/routes/auth.route";
 import { generateBoardRoutes } from "@/routes/board.route";
 import { generatePublicRoutes } from "@/routes/public.route";
 import { generateUserRoutes } from "@/routes/user.route";
-
-import { DatabaseService } from "@/services/database.service";
 
 import { validateEnv } from "@/utils/env.utils";
 
@@ -22,8 +22,8 @@ const PORT = process.env.PORT || 5000;
 async function main(): Promise<void> {
   validateEnv();
 
-  const databaseService = new DatabaseService();
-  const isDatabaseInitialized = await databaseService.init();
+  globalThis.dataSource = new CanbanDataSource();
+  const isDatabaseInitialized = await dataSource.init();
 
   if (!isDatabaseInitialized) {
     return;
