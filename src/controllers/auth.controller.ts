@@ -25,8 +25,8 @@ import { mapToTokenPayload } from "@/utils/mapper.utils";
 export class AuthController {
   private readonly userRepo: Repository<User>;
 
-  public constructor(databaseService: DatabaseService) {
-    this.userRepo = databaseService.dataSource.getRepository(User);
+  public constructor() {
+    this.userRepo = DatabaseService.dataSource.getRepository(User);
 
     this.signUp = this.signUp.bind(this);
     this.signIn = this.signIn.bind(this);

@@ -9,6 +9,7 @@ import "reflect-metadata";
 import { globalErrorHandler } from "@/handlers/global-error.handler";
 
 import { generateAuthRoutes } from "@/routes/auth.route";
+import { generateBoardRoutes } from "@/routes/board.route";
 import { generatePublicRoutes } from "@/routes/public.route";
 import { generateUserRoutes } from "@/routes/user.route";
 
@@ -33,9 +34,10 @@ async function main(): Promise<void> {
   app.use(cookieParser());
   app.use(cors({ origin: true, credentials: true }));
 
-  app.use("/api/auth", generateAuthRoutes(databaseService));
+  app.use("/api/auth", generateAuthRoutes());
+  app.use("/api/board", generateBoardRoutes());
   app.use("/api/public", generatePublicRoutes());
-  app.use("/api/user", generateUserRoutes(databaseService));
+  app.use("/api/user", generateUserRoutes());
 
   app.use(globalErrorHandler);
 

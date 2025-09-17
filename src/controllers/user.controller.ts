@@ -25,10 +25,10 @@ export class UserController {
 
   private readonly userRepo: Repository<User>;
 
-  public constructor(databaseService: DatabaseService) {
+  public constructor() {
     this.fileService = new FileService("user");
 
-    this.userRepo = databaseService.dataSource.getRepository(User);
+    this.userRepo = DatabaseService.dataSource.getRepository(User);
 
     this.getUser = this.getUser.bind(this);
     this.updateUser = this.updateUser.bind(this);

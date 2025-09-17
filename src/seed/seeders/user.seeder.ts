@@ -12,8 +12,8 @@ import { hashPassword } from "@/utils/auth.utils";
 export class UserSeeder {
   private readonly userRepo: Repository<User>;
 
-  public constructor(databaseService: DatabaseService) {
-    this.userRepo = databaseService.dataSource.getRepository(User);
+  public constructor() {
+    this.userRepo = DatabaseService.dataSource.getRepository(User);
   }
 
   public async seed(): Promise<void> {

@@ -26,7 +26,7 @@ async function main(): Promise<void> {
 
   await wipeFileStorage();
 
-  await databaseService.dataSource.destroy();
+  await DatabaseService.dataSource.destroy();
 }
 
 async function wipeFileStorage(): Promise<void> {

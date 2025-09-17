@@ -1,4 +1,5 @@
 import "dotenv/config";
+
 import { UserSeeder } from "@/seed/seeders/user.seeder";
 
 import { DatabaseService } from "@/services/database.service";
@@ -15,10 +16,10 @@ async function main(): Promise<void> {
     return;
   }
 
-  await new UserSeeder(databaseService).seed();
+  await new UserSeeder().seed();
   console.log("");
 
-  await databaseService.dataSource.destroy();
+  await DatabaseService.dataSource.destroy();
 }
 
 main().then();

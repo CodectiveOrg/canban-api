@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 
-import { injectable } from "tsyringe";
-
 import { Repository } from "typeorm";
 
 import { z } from "zod";
@@ -22,18 +20,17 @@ import { FileService } from "@/services/file.service";
 import { fetchUserFromToken } from "@/utils/api.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
 
-@injectable()
 export class BoardController {
   private readonly fileService: FileService;
 
   private readonly boardRepo: Repository<Board>;
   private readonly userRepo: Repository<User>;
 
-  public constructor(databaseService: DatabaseService) {
+  public constructor() {
     this.fileService = new FileService("board");
 
-    this.boardRepo = databaseService.dataSource.getRepository(Board);
-    this.userRepo = databaseService.dataSource.getRepository(User);
+    this.boardRepo = DatabaseService.dataSource.getRepository(Board);
+    this.userRepo = DatabaseService.dataSource.getRepository(User);
 
     this.createBoard = this.createBoard.bind(this);
     this.getBoard = this.getBoard.bind(this);

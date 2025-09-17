@@ -7,10 +7,14 @@ import { List } from "@/entities/list";
 import { User } from "@/entities/user";
 
 export class DatabaseService {
-  public dataSource: DataSource;
+  public static dataSource: DataSource;
 
   public constructor(options: Partial<PostgresConnectionOptions> = {}) {
-    this.dataSource = new DataSource({
+    if (DatabaseService.dataSource) {
+      return;
+    }
+
+    DatabaseService.dataSource = new DataSource({
       type: "postgres",
       url: process.env.DATABASE_URL!,
       entities: [Board, Item, List, User],
@@ -26,7 +30,7 @@ export class DatabaseService {
 
   private async isConnected(): Promise<boolean> {
     try {
-      await this.dataSource.initialize();
+      await DatabaseService.dataSource.initialize();
       console.log("Connection has been established successfully.");
       return true;
     } catch (error) {
