@@ -15,9 +15,9 @@ import { List } from "@/entities/list";
 
 import { assignDefinedValues } from "@/utils/object.utils";
 
-import { DescriptionSchema } from "@/validation/schemas/description-schema";
-import { DueDateSchema } from "@/validation/schemas/due-date-schema";
-import { TitleSchema } from "@/validation/schemas/title-schema";
+import { DescriptionSchema } from "@/validation/schemas/description.schema";
+import { DueDateSchema } from "@/validation/schemas/due-date.schema";
+import { TitleSchema } from "@/validation/schemas/title.schema";
 
 export class ItemController {
   private readonly listRepo: Repository<List>;

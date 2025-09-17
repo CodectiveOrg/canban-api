@@ -16,9 +16,9 @@ import { Board } from "@/entities/board";
 import { fetchUserFromToken } from "@/utils/api.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
 
-import { ColorSchema } from "@/validation/schemas/color-schema";
-import { DescriptionSchema } from "@/validation/schemas/description-schema";
-import { TitleSchema } from "@/validation/schemas/title-schema";
+import { ColorSchema } from "@/validation/schemas/color.schema";
+import { DescriptionSchema } from "@/validation/schemas/description.schema";
+import { TitleSchema } from "@/validation/schemas/title.schema";
 
 export class BoardController {
   private readonly boardRepo: Repository<Board>;
