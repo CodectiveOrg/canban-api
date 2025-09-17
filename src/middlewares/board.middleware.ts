@@ -9,7 +9,12 @@ export const boardMiddleware: RequestHandler = async (req, res, next) => {
 
   const params = BoardIdParamsSchema.parse(req.params);
 
-  const board = await boardRepo.findOne({ where: { id: params.boardId } });
+  const board = await boardRepo.findOne({
+    where: {
+      id: params.boardId,
+      user: { id: res.locals.user.id },
+    },
+  });
 
   if (!board) {
     res.status(404).json({
