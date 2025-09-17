@@ -8,7 +8,10 @@ import { ColorSchema } from "@/validation/schemas/color-schema";
 import { DescriptionSchema } from "@/validation/schemas/description-schema";
 import { TitleSchema } from "@/validation/schemas/title-schema";
 
-import { GetBoardResponseDto } from "@/dto/board-response.dto";
+import {
+  CreateBoardResponseDto,
+  GetBoardResponseDto,
+} from "@/dto/board-response.dto";
 import { ResponseDto } from "@/dto/response.dto";
 
 import { Board } from "@/entities/board";
@@ -39,14 +42,17 @@ export class BoardController {
 
   public async createBoard(
     req: Request,
-    res: Response<ResponseDto>,
+    res: Response<CreateBoardResponseDto>,
   ): Promise<void> {
     const body = CreateBoardBodySchema.parse(req.body);
     const user = await fetchUserFromToken(res, this.userRepo);
 
-    await this.boardRepo.save({ ...body, user });
+    const createdBoard = await this.boardRepo.save({ ...body, user });
 
-    res.status(201).json({ message: "Board created successfully." });
+    res.status(201).json({
+      message: "Board created successfully.",
+      result: createdBoard.id,
+    });
   }
 
   public async getBoard(
@@ -72,10 +78,10 @@ export class BoardController {
   }
 
   public async removeBoard(
-    req: Request,
+    _: Request,
     res: Response<ResponseDto>,
   ): Promise<void> {
-    await this.boardRepo.delete(res.locals.board);
+    await this.boardRepo.delete(res.locals.board.id);
 
     res.json({ message: "Board updated successfully." });
   }
