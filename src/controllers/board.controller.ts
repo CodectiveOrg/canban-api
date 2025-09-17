@@ -60,7 +60,7 @@ export class BoardController {
     req: Request,
     res: Response<ResponseDto>,
   ): Promise<void> {
-    const body = UpdateBodySchema.parse(req.body);
+    const body = UpdateBoardBodySchema.parse(req.body);
 
     const updatedBoard = assignDefinedValues(res.locals.board, body);
     await this.boardRepo.save(updatedBoard);
@@ -74,7 +74,7 @@ export class BoardController {
   ): Promise<void> {
     await this.boardRepo.delete(res.locals.board.id);
 
-    res.json({ message: "Board updated successfully." });
+    res.json({ message: "Board removed successfully." });
   }
 }
 
@@ -84,7 +84,7 @@ const CreateBoardBodySchema = z.object({
   color: ColorSchema,
 });
 
-const UpdateBodySchema = z.object({
+const UpdateBoardBodySchema = z.object({
   title: TitleSchema.optional(),
   description: DescriptionSchema.optional(),
   color: ColorSchema.optional(),

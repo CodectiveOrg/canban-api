@@ -10,8 +10,11 @@ import { CanbanDataSource } from "@/database/canban.data-source";
 
 import { globalErrorHandler } from "@/handlers/global-error.handler";
 
+import { authMiddleware } from "@/middlewares/auth.middleware";
+
 import { generateAuthRoutes } from "@/routes/auth.route";
 import { generateBoardRoutes } from "@/routes/board.route";
+import { generateListRoutes } from "@/routes/list.route";
 import { generatePublicRoutes } from "@/routes/public.route";
 import { generateUserRoutes } from "@/routes/user.route";
 
@@ -35,9 +38,10 @@ async function main(): Promise<void> {
   app.use(cors({ origin: true, credentials: true }));
 
   app.use("/api/auth", generateAuthRoutes());
-  app.use("/api/board", generateBoardRoutes());
+  app.use("/api/board", authMiddleware, generateBoardRoutes());
+  app.use("/api/list", authMiddleware, generateListRoutes());
   app.use("/api/public", generatePublicRoutes());
-  app.use("/api/user", generateUserRoutes());
+  app.use("/api/user", authMiddleware, generateUserRoutes());
 
   app.use(globalErrorHandler);
 
