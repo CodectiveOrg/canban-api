@@ -4,9 +4,6 @@ import { Like, Repository } from "typeorm";
 
 import { z } from "zod";
 
-import { PasswordSchema } from "@/validation/schemas/password.schema";
-import { UsernameSchema } from "@/validation/schemas/username.schema";
-
 import { AuthVerifyResponseDto } from "@/dto/auth-response.dto";
 import { ResponseDto } from "@/dto/response.dto";
 
@@ -19,6 +16,9 @@ import {
   hashPassword,
 } from "@/utils/auth.utils";
 import { mapToTokenPayload } from "@/utils/mapper.utils";
+
+import { PasswordSchema } from "@/validation/schemas/password.schema";
+import { UsernameSchema } from "@/validation/schemas/username.schema";
 
 export class AuthController {
   private readonly userRepo: Repository<User>;

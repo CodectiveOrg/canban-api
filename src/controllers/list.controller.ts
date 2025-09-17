@@ -4,9 +4,6 @@ import { Repository } from "typeorm";
 
 import { z } from "zod";
 
-import { DescriptionSchema } from "@/validation/schemas/description-schema";
-import { TitleSchema } from "@/validation/schemas/title-schema";
-
 import {
   CreateListResponseDto,
   GetListResponseDto,
@@ -17,6 +14,9 @@ import { Board } from "@/entities/board";
 import { List } from "@/entities/list";
 
 import { assignDefinedValues } from "@/utils/object.utils";
+
+import { DescriptionSchema } from "@/validation/schemas/description-schema";
+import { TitleSchema } from "@/validation/schemas/title-schema";
 
 export class ListController {
   private readonly boardRepo: Repository<Board>;

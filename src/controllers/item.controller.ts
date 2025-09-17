@@ -4,10 +4,6 @@ import { Repository } from "typeorm";
 
 import { z } from "zod";
 
-import { DescriptionSchema } from "@/validation/schemas/description-schema";
-import { DueDateSchema } from "@/validation/schemas/due-date-schema";
-import { TitleSchema } from "@/validation/schemas/title-schema";
-
 import {
   CreateItemResponseDto,
   GetItemResponseDto,
@@ -18,6 +14,10 @@ import { Item } from "@/entities/item";
 import { List } from "@/entities/list";
 
 import { assignDefinedValues } from "@/utils/object.utils";
+
+import { DescriptionSchema } from "@/validation/schemas/description-schema";
+import { DueDateSchema } from "@/validation/schemas/due-date-schema";
+import { TitleSchema } from "@/validation/schemas/title-schema";
 
 export class ItemController {
   private readonly listRepo: Repository<List>;

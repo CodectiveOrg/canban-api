@@ -4,10 +4,6 @@ import { Repository } from "typeorm";
 
 import { z } from "zod";
 
-import { EmailSchema } from "@/validation/schemas/email.schema";
-import { PasswordSchema } from "@/validation/schemas/password.schema";
-import { UsernameSchema } from "@/validation/schemas/username.schema";
-
 import { ResponseDto } from "@/dto/response.dto";
 import { GetUserResponseDto } from "@/dto/user-response.dto";
 
@@ -18,6 +14,10 @@ import { FileService } from "@/services/file.service";
 import { fetchUserFromToken } from "@/utils/api.utils";
 import { hashPassword } from "@/utils/auth.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
+
+import { EmailSchema } from "@/validation/schemas/email.schema";
+import { PasswordSchema } from "@/validation/schemas/password.schema";
+import { UsernameSchema } from "@/validation/schemas/username.schema";
 
 export class UserController {
   private readonly fileService: FileService;
