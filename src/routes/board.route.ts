@@ -8,6 +8,7 @@ export function generateBoardRoutes(): Router {
   const router = Router();
   const controller = new BoardController();
 
+  router.get("/", controller.getAllBoards);
   router.post("/", controller.createBoard);
   router.get("/:boardId", boardMiddleware, controller.getBoard);
   router.patch("/:boardId", boardMiddleware, controller.updateBoard);

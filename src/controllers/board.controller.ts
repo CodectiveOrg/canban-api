@@ -10,6 +10,7 @@ import { TitleSchema } from "@/validation/schemas/title-schema";
 
 import {
   CreateBoardResponseDto,
+  GetAllBoardsResponseDto,
   GetBoardResponseDto,
 } from "@/dto/board-response.dto";
 import { ResponseDto } from "@/dto/response.dto";
@@ -25,10 +26,25 @@ export class BoardController {
   public constructor() {
     this.boardRepo = dataSource.getRepository(Board);
 
+    this.getAllBoards = this.getAllBoards.bind(this);
     this.createBoard = this.createBoard.bind(this);
     this.getBoard = this.getBoard.bind(this);
     this.updateBoard = this.updateBoard.bind(this);
     this.removeBoard = this.removeBoard.bind(this);
+  }
+
+  public async getAllBoards(
+    _: Request,
+    res: Response<GetAllBoardsResponseDto>,
+  ): Promise<void> {
+    const boards = await this.boardRepo.find({
+      where: { user: { id: res.locals.user.id } },
+    });
+
+    res.json({
+      message: "All boards fetched successfully.",
+      result: boards,
+    });
   }
 
   public async createBoard(
@@ -50,9 +66,14 @@ export class BoardController {
     _: Request,
     res: Response<GetBoardResponseDto>,
   ): Promise<void> {
+    const boardWithRelations = await this.boardRepo.findOne({
+      where: { id: res.locals.board.id },
+      relations: { lists: { items: true } },
+    });
+
     res.json({
       message: "Board fetched successfully.",
-      result: res.locals.board,
+      result: boardWithRelations!,
     });
   }
 
