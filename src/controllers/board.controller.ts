@@ -15,24 +15,15 @@ import {
 import { ResponseDto } from "@/dto/response.dto";
 
 import { Board } from "@/entities/board";
-import { User } from "@/entities/user";
-
-import { FileService } from "@/services/file.service";
 
 import { fetchUserFromToken } from "@/utils/api.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
 
 export class BoardController {
-  private readonly fileService: FileService;
-
   private readonly boardRepo: Repository<Board>;
-  private readonly userRepo: Repository<User>;
 
   public constructor() {
-    this.fileService = new FileService("board");
-
     this.boardRepo = dataSource.getRepository(Board);
-    this.userRepo = dataSource.getRepository(User);
 
     this.createBoard = this.createBoard.bind(this);
     this.getBoard = this.getBoard.bind(this);
@@ -45,7 +36,7 @@ export class BoardController {
     res: Response<CreateBoardResponseDto>,
   ): Promise<void> {
     const body = CreateBoardBodySchema.parse(req.body);
-    const user = await fetchUserFromToken(res, this.userRepo);
+    const user = await fetchUserFromToken(res);
 
     const createdBoard = await this.boardRepo.save({ ...body, user });
 

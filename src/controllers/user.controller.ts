@@ -37,7 +37,7 @@ export class UserController {
     _: Request,
     res: Response<GetUserResponseDto>,
   ): Promise<void> {
-    const user = await fetchUserFromToken(res, this.userRepo);
+    const user = await fetchUserFromToken(res);
 
     if (!user) {
       res.status(404).json({
@@ -59,7 +59,7 @@ export class UserController {
     res: Response<ResponseDto>,
   ): Promise<void> {
     const body = UpdateBodySchema.parse(req.body);
-    const user = await fetchUserFromToken(res, this.userRepo);
+    const user = await fetchUserFromToken(res);
 
     if (body.password) {
       body.password = await hashPassword(body.password);

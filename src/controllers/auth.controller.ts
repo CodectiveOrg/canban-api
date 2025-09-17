@@ -66,7 +66,7 @@ export class AuthController {
 
     // NOTE: Since some columns aren't selected by default,
     //       the easiest way to select all columns is to use this method.
-    const user = await selectUserWithPassword(this.userRepo, username);
+    const user = await selectUserWithPassword(username);
 
     if (!user) {
       res.status(401).json({
