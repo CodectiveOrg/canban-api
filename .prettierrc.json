@@ -10,7 +10,9 @@
     "^(jsonwebtoken|bcrypt)(/(.*))?$",
     "^zod(/(.*))?$",
     "<THIRD_PARTY_MODULES>",
+    "^@/@types",
     "^@/controllers",
+    "^@/database",
     "^@/dto",
     "^@/entities",
     "^@/handlers",
@@ -21,6 +23,7 @@
     "^@/truncate",
     "^@/types",
     "^@/utils",
+    "^@/validation",
     "^(\\.|\\.\\.)/.*$"
   ],
   "importOrderSeparation": true,
