@@ -22,6 +22,8 @@ export async function fetchUserFromToken(
   return user;
 }
 
+// NOTE: Since some columns aren't selected by default,
+//       the easiest way to select all columns is to use this method.
 export async function selectUserWithPassword(
   username: string,
 ): Promise<User | null> {

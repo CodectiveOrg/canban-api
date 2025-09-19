@@ -4,6 +4,8 @@ import { ILike, Repository } from "typeorm";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import { AuthVerifyResponseDto } from "@/dto/auth-response.dto";
 import { ResponseDto } from "@/dto/response.dto";
 
@@ -41,12 +43,7 @@ export class AuthController {
     });
 
     if (user) {
-      res.status(409).json({
-        message: "Username is already taken.",
-        error: "Conflict",
-      });
-
-      return;
+      throw new HttpError(409, "Username is already taken.");
     }
 
     const hashedPassword = await hashPassword(password);
@@ -64,28 +61,15 @@ export class AuthController {
     const body = SignInBodySchema.parse(req.body);
     const { username, password } = body;
 
-    // NOTE: Since some columns aren't selected by default,
-    //       the easiest way to select all columns is to use this method.
     const user = await selectUserWithPassword(username);
 
     if (!user) {
-      res.status(401).json({
-        message: "Username or password is incorrect.",
-        error: "Unauthorized",
-      });
-
-      return;
+      throw new HttpError(401, "Username or password is incorrect.");
     }
 
     const isPasswordCorrect = await comparePasswords(password, user.password);
-
     if (!isPasswordCorrect) {
-      res.status(401).json({
-        message: "Username or password is incorrect.",
-        error: "Unauthorized",
-      });
-
-      return;
+      throw new HttpError(401, "Username or password is incorrect.");
     }
 
     generateToken(res, mapToTokenPayload(user));
@@ -106,8 +90,7 @@ export class AuthController {
     const { user } = res.locals;
 
     if (!user) {
-      res.sendStatus(401);
-      return;
+      throw new HttpError(401);
     }
 
     res.json({ message: "Token is valid.", result: user });

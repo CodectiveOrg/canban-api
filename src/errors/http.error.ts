@@ -3,6 +3,7 @@ const status = {
   401: "Unauthorized",
   403: "Forbidden",
   404: "Not Found",
+  409: "Conflict",
   413: "Content Too Large",
   415: "Unsupported Media Type",
   500: "OK",
@@ -16,8 +17,9 @@ export class HttpError {
 
   public constructor(
     public statusCode: StatusCode,
-    public message: string,
+    public message?: string,
   ) {
     this.reasonPhrase = status[statusCode];
+    this.message = this.message ?? this.reasonPhrase;
   }
 }
