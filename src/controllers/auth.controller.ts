@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { Like, Repository } from "typeorm";
+import { ILike, Repository } from "typeorm";
 
 import { z } from "zod";
 
@@ -37,7 +37,7 @@ export class AuthController {
     const { username, password } = body;
 
     const user = await this.userRepo.findOne({
-      where: [{ username: Like(username) }],
+      where: [{ username: ILike(username) }],
     });
 
     if (user) {

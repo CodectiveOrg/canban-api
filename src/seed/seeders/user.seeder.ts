@@ -1,4 +1,4 @@
-import { Like, Repository } from "typeorm";
+import { ILike, Repository } from "typeorm";
 
 import { User } from "@/entities/user";
 
@@ -20,7 +20,7 @@ export class UserSeeder {
 
   private async seedUser(user: SeedUserType): Promise<void> {
     const foundUser = await this.userRepo.findOne({
-      where: [{ username: Like(user.username) }],
+      where: [{ username: ILike(user.username) }],
     });
 
     if (foundUser) {

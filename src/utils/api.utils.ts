@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-import { Like } from "typeorm";
+import { ILike } from "typeorm";
 
 import { User } from "@/entities/user";
 
@@ -13,7 +13,7 @@ export async function fetchUserFromToken(
 
   const { username } = res.locals.user;
 
-  const user = await userRepo.findOne({ where: { username: Like(username) } });
+  const user = await userRepo.findOne({ where: { username: ILike(username) } });
 
   if (!user) {
     throw new Error("User not found.");
@@ -34,6 +34,6 @@ export async function selectUserWithPassword(
   return userRepo
     .createQueryBuilder("user")
     .select(columns)
-    .where({ username: Like(username) })
+    .where({ username: ILike(username) })
     .getOne();
 }
