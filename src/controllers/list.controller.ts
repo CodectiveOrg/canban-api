@@ -54,9 +54,11 @@ export class ListController {
       return;
     }
 
-    const maxPosition = await this.listRepo.maximum("position", {
-      board: { id: board.id },
-    });
+    const { maxPosition } = await this.listRepo
+      .createQueryBuilder("list")
+      .select("MAX(list.position)", "maxPosition")
+      .where("list.boardId = :boardId", { boardId: board.id })
+      .getRawOne();
 
     const createdList = await this.listRepo.save({
       ...body,
