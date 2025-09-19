@@ -15,15 +15,23 @@ export class UserSeeder {
   }
 
   public async seed(): Promise<void> {
-    await Promise.allSettled(usersData.map(this.seedUser.bind(this)));
+    const results = await Promise.allSettled(
+      usersData.map(this.seedUser.bind(this)),
+    );
+
+    results
+      .filter((result) => result.status === "rejected")
+      .map((result) => {
+        console.error(result.reason);
+      });
   }
 
   private async seedUser(user: SeedUserType): Promise<void> {
-    const foundUser = await this.userRepo.findOne({
+    const doesUserExist = await this.userRepo.exists({
       where: [{ username: ILike(user.username) }],
     });
 
-    if (foundUser) {
+    if (doesUserExist) {
       console.log(`User already exists. Username: ${user.username}`);
       return;
     }
