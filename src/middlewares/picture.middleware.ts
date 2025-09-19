@@ -15,18 +15,18 @@ export const pictureMiddleware: RequestHandler = async (req, res, next) => {
   }
 
   if (req.file.size > MAX_SIZE_BYTE) {
-    res.status(400).send({
+    res.status(413).send({
       message: `The file size should not exceed ${MAX_SIZE_MEGABYTE}MB.`,
-      error: "Bad Request",
+      error: "Content Too Large",
     });
 
     return;
   }
 
   if (!(await hasValidFileType(req.file))) {
-    res.status(400).send({
+    res.status(415).send({
       message: "Please upload a valid jpg, png or webp image.",
-      error: "Bad Request",
+      error: "Unsupported Media Type",
     });
 
     return;
