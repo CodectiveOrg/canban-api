@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { Between, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 import { z } from "zod";
 
@@ -56,9 +56,11 @@ export class ListController {
       return;
     }
 
+    const maxPosition = await getMaxPositionAmongLists(board.id);
+
     const createdList = await this.listRepo.save({
       ...body,
-      position: ((await getMaxPositionAmongLists(board.id)) ?? 0) + 1,
+      position: maxPosition + 1,
       board,
     });
 
@@ -106,12 +108,12 @@ export class ListController {
     const body = MoveListBodySchema.parse(req.body);
 
     const activeList = res.locals.list as List;
+
     const overList = (await this.listRepo.findOne({
       where: { id: body.overId },
     }))!;
 
     const lists = await moveEntities(List, activeList, overList);
-
     await this.listRepo.save([activeList, overList, ...lists]);
 
     res.json({ message: "List moved successfully." });

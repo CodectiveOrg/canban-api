@@ -12,6 +12,7 @@ export function generateItemRoutes(): Router {
   router.get("/:itemId", itemMiddleware, controller.getItem);
   router.patch("/:itemId", itemMiddleware, controller.updateItem);
   router.delete("/:itemId", itemMiddleware, controller.removeItem);
+  router.post("/:itemId/move", itemMiddleware, controller.moveItem);
 
   return router;
 }

@@ -14,6 +14,11 @@ import { Item } from "@/entities/item";
 import { List } from "@/entities/list";
 
 import { assignDefinedValues } from "@/utils/object.utils";
+import {
+  getMaxPositionAmongItems,
+  moveEntities,
+  moveItemToList,
+} from "@/utils/position.utils";
 
 import { DescriptionSchema } from "@/validation/schemas/description.schema";
 import { DueDateSchema } from "@/validation/schemas/due-date.schema";
@@ -31,6 +36,7 @@ export class ItemController {
     this.getItem = this.getItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.moveItem = this.moveItem.bind(this);
   }
 
   public async createItem(
@@ -55,15 +61,11 @@ export class ItemController {
       return;
     }
 
-    const { maxPosition } = await this.itemRepo
-      .createQueryBuilder("item")
-      .select("MAX(item.position)", "maxPosition")
-      .where("item.listId = :listId", { listId: list.id })
-      .getRawOne();
+    const maxPosition = await getMaxPositionAmongItems(list.id);
 
     const createdItem = await this.itemRepo.save({
       ...body,
-      position: (maxPosition ?? 0) + 1,
+      position: maxPosition + 1,
       list,
     });
 
@@ -103,6 +105,56 @@ export class ItemController {
 
     res.json({ message: "Item removed successfully." });
   }
+
+  public async moveItem(
+    req: Request,
+    res: Response<ResponseDto>,
+  ): Promise<void> {
+    const body = MoveItemBodySchema.parse(req.body);
+
+    const activeItem = (await this.itemRepo.findOne({
+      where: { id: res.locals.item.id },
+      relations: { list: true },
+    }))!;
+
+    if ("overListId" in body) {
+      const overList = await this.listRepo.findOne({
+        where: { id: body.overListId },
+      });
+
+      if (!overList) {
+        res.status(404).json({
+          message: "Over list not found.",
+          error: "Not Found",
+        });
+
+        return;
+      }
+
+      await moveItemToList(activeItem, overList.id);
+      await this.itemRepo.save(activeItem);
+    } else {
+      const overItem = await this.itemRepo.findOne({
+        where: { id: body.overItemId },
+        relations: { list: true },
+      });
+
+      if (!overItem) {
+        res.status(404).json({
+          message: "Over item not found.",
+          error: "Not Found",
+        });
+
+        return;
+      }
+
+      await moveItemToList(activeItem, overItem.list.id);
+      const items = await moveEntities(Item, activeItem, overItem);
+      await this.itemRepo.save([activeItem, overItem, ...items]);
+    }
+
+    res.json({ message: "Item moved successfully." });
+  }
 }
 
 const CreateItemBodySchema = z.object({
@@ -117,3 +169,12 @@ const UpdateItemBodySchema = z.object({
   description: DescriptionSchema.optional(),
   dueDate: DueDateSchema.optional(),
 });
+
+const MoveItemBodySchema = z.union([
+  z.object({
+    overListId: z.coerce.number(),
+  }),
+  z.object({
+    overItemId: z.coerce.number(),
+  }),
+]);

@@ -35,6 +35,18 @@ export async function moveEntities<T extends List | Item>(
   return entities;
 }
 
+export async function moveItemToList(
+  activeItem: Item,
+  overListId: number,
+): Promise<void> {
+  if (activeItem.list.id !== overListId) {
+    activeItem.list.id = overListId;
+
+    const maxPosition = await getMaxPositionAmongItems(overListId);
+    activeItem.position = maxPosition + 1;
+  }
+}
+
 export async function getMaxPositionAmongLists(
   boardId: number,
 ): Promise<number> {
@@ -46,5 +58,19 @@ export async function getMaxPositionAmongLists(
     .where("list.boardId = :boardId", { boardId })
     .getRawOne();
 
-  return maxPosition;
+  return maxPosition ?? 0;
+}
+
+export async function getMaxPositionAmongItems(
+  listId: number,
+): Promise<number> {
+  const itemRepo = dataSource.getRepository(Item);
+
+  const { maxPosition } = await itemRepo
+    .createQueryBuilder("item")
+    .select("MAX(item.position)", "maxPosition")
+    .where("item.listId = :listId", { listId })
+    .getRawOne();
+
+  return maxPosition ?? 0;
 }
