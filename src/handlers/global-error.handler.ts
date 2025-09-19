@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import { ResponseDto } from "@/dto/response.dto";
 
 export async function globalErrorHandler(
@@ -15,6 +17,11 @@ export async function globalErrorHandler(
     res.status(400).send({
       message: err.issues.map((issue) => issue.message).join("\n"),
       error: "Bad Request",
+    });
+  } else if (err instanceof HttpError) {
+    res.status(err.statusCode).send({
+      message: err.message,
+      error: err.reasonPhrase,
     });
   } else if (err instanceof Error) {
     res.status(500).send({
