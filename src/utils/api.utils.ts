@@ -2,6 +2,8 @@ import { Response } from "express";
 
 import { ILike } from "typeorm";
 
+import { HttpError } from "@/errors/http.error";
+
 import { User } from "@/entities/user";
 
 import { PasswordlessUser } from "@/types/passwordless-user.type";
@@ -16,7 +18,7 @@ export async function fetchUserFromToken(
   const user = await userRepo.findOne({ where: { username: ILike(username) } });
 
   if (!user) {
-    throw new Error("User not found.");
+    throw new HttpError(404, "User not found.");
   }
 
   return user;
