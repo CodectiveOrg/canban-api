@@ -9,6 +9,7 @@
     "^file-type(/(.*))?$",
     "^(jsonwebtoken|bcrypt)(/(.*))?$",
     "^zod(/(.*))?$",
+    "^@faker-js(/(.*))?$",
     "<THIRD_PARTY_MODULES>",
     "^@/@types",
     "^@/controllers",

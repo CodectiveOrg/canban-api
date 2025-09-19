@@ -1,58 +1,63 @@
 import { Request, Response } from "express";
 
-import { ILike, Repository } from "typeorm";
-
 import { z } from "zod";
 
 import { HttpError } from "@/errors/http.error";
 
-import { AuthVerifyResponseDto } from "@/dto/auth-response.dto";
+import {
+  AuthVerifyResponseDto,
+  GenerateRandomUserResponseDto,
+} from "@/dto/auth-response.dto";
 import { ResponseDto } from "@/dto/response.dto";
 
-import { User } from "@/entities/user";
+import { AuthService } from "@/services/auth.service";
 
 import { selectUserWithPassword } from "@/utils/api.utils";
-import {
-  comparePasswords,
-  generateToken,
-  hashPassword,
-} from "@/utils/auth.utils";
+import { comparePasswords, generateToken } from "@/utils/auth.utils";
 import { mapToTokenPayload } from "@/utils/mapper.utils";
 
 import { PasswordSchema } from "@/validation/schemas/password.schema";
 import { UsernameSchema } from "@/validation/schemas/username.schema";
 
 export class AuthController {
-  private readonly userRepo: Repository<User>;
+  private authService!: AuthService;
 
   public constructor() {
-    this.userRepo = dataSource.getRepository(User);
+    this.authService = new AuthService();
 
+    this.generateRandomUser = this.generateRandomUser.bind(this);
     this.signUp = this.signUp.bind(this);
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
     this.verify = this.verify.bind(this);
   }
 
+  public async generateRandomUser(
+    _: Request,
+    res: Response<GenerateRandomUserResponseDto>,
+  ): Promise<void> {
+    const createdUser = await this.authService.generateRandomUser();
+
+    generateToken(res, mapToTokenPayload(createdUser));
+
+    res.status(201).json({
+      message: "Signed up successfully.",
+      result: {
+        username: createdUser.username,
+        password: AuthService.RANDOM_USER_PASSWORD,
+      },
+    });
+  }
+
   public async signUp(req: Request, res: Response<ResponseDto>): Promise<void> {
     const body = SignUpBodySchema.parse(req.body);
-    const { username, password } = body;
 
-    const user = await this.userRepo.findOne({
-      where: [{ username: ILike(username) }],
-    });
+    const createdUser = await this.authService.signUp(
+      body.username,
+      body.password,
+    );
 
-    if (user) {
-      throw new HttpError(409, "Username is already taken.");
-    }
-
-    const hashedPassword = await hashPassword(password);
-    const savedUser = await this.userRepo.save({
-      ...body,
-      password: hashedPassword,
-    });
-
-    generateToken(res, mapToTokenPayload(savedUser));
+    generateToken(res, mapToTokenPayload(createdUser));
 
     res.status(201).json({ message: "Signed up successfully." });
   }
