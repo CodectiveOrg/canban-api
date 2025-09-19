@@ -69,6 +69,7 @@ export class BoardController {
     const boardWithRelations = await this.boardRepo.findOne({
       where: { id: res.locals.board.id },
       relations: { lists: { items: true } },
+      order: { lists: { position: "ASC", items: { position: "ASC" } } },
     });
 
     res.json({

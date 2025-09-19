@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { Repository } from "typeorm";
+import { Between, Repository } from "typeorm";
 
 import { z } from "zod";
 
@@ -30,6 +30,7 @@ export class ListController {
     this.getList = this.getList.bind(this);
     this.updateList = this.updateList.bind(this);
     this.removeList = this.removeList.bind(this);
+    this.moveList = this.moveList.bind(this);
   }
 
   public async createList(
@@ -102,6 +103,45 @@ export class ListController {
 
     res.json({ message: "List removed successfully." });
   }
+
+  public async moveList(
+    req: Request,
+    res: Response<ResponseDto>,
+  ): Promise<void> {
+    const body = MoveListBodySchema.parse(req.body);
+
+    const activeList = res.locals.list as List;
+    const overList = (await this.listRepo.findOne({
+      where: { id: body.overId },
+    }))!;
+
+    const lists = await this.listRepo.find({
+      where: {
+        position: Between(
+          Math.min(activeList.position, overList.position),
+          Math.max(activeList.position, overList.position),
+        ),
+      },
+    });
+
+    for (const list of lists) {
+      if (list.id === activeList.id) {
+        continue;
+      }
+
+      if (list.position < activeList.position) {
+        list.position++;
+      } else {
+        list.position--;
+      }
+    }
+
+    activeList.position = overList.position;
+
+    await this.listRepo.save([activeList, overList, ...lists]);
+
+    res.json({ message: "List moved successfully." });
+  }
 }
 
 const CreateListBodySchema = z.object({
@@ -113,4 +153,8 @@ const CreateListBodySchema = z.object({
 const UpdateListBodySchema = z.object({
   title: TitleSchema.optional(),
   description: DescriptionSchema.optional(),
+});
+
+const MoveListBodySchema = z.object({
+  overId: z.coerce.number(),
 });

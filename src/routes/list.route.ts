@@ -12,6 +12,7 @@ export function generateListRoutes(): Router {
   router.get("/:listId", listMiddleware, controller.getList);
   router.patch("/:listId", listMiddleware, controller.updateList);
   router.delete("/:listId", listMiddleware, controller.removeList);
+  router.post("/:listId/move", listMiddleware, controller.moveList);
 
   return router;
 }
