@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import {
   CreateListResponseDto,
   GetListResponseDto,
@@ -48,12 +50,7 @@ export class ListController {
     });
 
     if (!board) {
-      res.status(404).json({
-        message: "Board not found.",
-        error: "Not Found",
-      });
-
-      return;
+      throw new HttpError(404, "Board not found.");
     }
 
     const maxPosition = await getMaxPositionAmongLists(board.id);
