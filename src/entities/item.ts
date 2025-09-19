@@ -5,9 +5,15 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  ValueTransformer,
 } from "typeorm";
 
 import { List } from "@/entities/list";
+
+const dueDateTransformer: ValueTransformer = {
+  to: (value: string | null) => (value === "" ? null : value),
+  from: (value: string | null) => value,
+};
 
 @Entity()
 export class Item {
@@ -23,7 +29,7 @@ export class Item {
   @Column("text")
   public description!: string;
 
-  @Column({ type: "date" })
+  @Column({ type: "date", nullable: true, transformer: dueDateTransformer })
   public dueDate?: string;
 
   @ManyToOne(() => List, (list) => list.items, { onDelete: "CASCADE" })
