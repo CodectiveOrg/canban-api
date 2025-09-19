@@ -14,6 +14,7 @@ import { Board } from "@/entities/board";
 import { List } from "@/entities/list";
 
 import { assignDefinedValues } from "@/utils/object.utils";
+import { getMaxPositionAmongLists, moveEntities } from "@/utils/position.utils";
 
 import { DescriptionSchema } from "@/validation/schemas/description.schema";
 import { TitleSchema } from "@/validation/schemas/title.schema";
@@ -55,15 +56,9 @@ export class ListController {
       return;
     }
 
-    const { maxPosition } = await this.listRepo
-      .createQueryBuilder("list")
-      .select("MAX(list.position)", "maxPosition")
-      .where("list.boardId = :boardId", { boardId: board.id })
-      .getRawOne();
-
     const createdList = await this.listRepo.save({
       ...body,
-      position: (maxPosition ?? 0) + 1,
+      position: ((await getMaxPositionAmongLists(board.id)) ?? 0) + 1,
       board,
     });
 
@@ -115,28 +110,7 @@ export class ListController {
       where: { id: body.overId },
     }))!;
 
-    const lists = await this.listRepo.find({
-      where: {
-        position: Between(
-          Math.min(activeList.position, overList.position),
-          Math.max(activeList.position, overList.position),
-        ),
-      },
-    });
-
-    for (const list of lists) {
-      if (list.id === activeList.id) {
-        continue;
-      }
-
-      if (list.position < activeList.position) {
-        list.position++;
-      } else {
-        list.position--;
-      }
-    }
-
-    activeList.position = overList.position;
+    const lists = await moveEntities(List, activeList, overList);
 
     await this.listRepo.save([activeList, overList, ...lists]);
 
