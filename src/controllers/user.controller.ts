@@ -11,8 +11,8 @@ import { User } from "@/entities/user";
 
 import { FileService } from "@/services/file.service";
 
-import { fetchUserFromToken } from "@/utils/api.utils";
-import { hashPassword } from "@/utils/auth.utils";
+import { fetchUserFromToken, selectUserWithPassword } from "@/utils/api.utils";
+import { comparePasswords, hashPassword } from "@/utils/auth.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
 
 import { EmailSchema } from "@/validation/schemas/email.schema";
@@ -59,15 +59,32 @@ export class UserController {
     res: Response<ResponseDto>,
   ): Promise<void> {
     const body = UpdateBodySchema.parse(req.body);
-    const user = await fetchUserFromToken(res);
+    const user = (await selectUserWithPassword(res.locals.user.username))!;
 
-    if (body.password) {
-      body.password = await hashPassword(body.password);
-    } else {
-      body.password = undefined;
+    const values: typeof body & { password?: string } = {
+      ...body,
+      password: undefined,
+    };
+
+    if (values.newPassword) {
+      const isPasswordCorrect = await comparePasswords(
+        values.currentPassword ?? "",
+        user.password,
+      );
+
+      if (!isPasswordCorrect) {
+        res.status(401).json({
+          message: "Current password is incorrect.",
+          error: "Unauthorized",
+        });
+
+        return;
+      }
+
+      values.password = await hashPassword(values.newPassword);
     }
 
-    const updatedUser = assignDefinedValues(user, body);
+    const updatedUser = assignDefinedValues(user, values);
 
     if (req.file) {
       await this.fileService.remove(user.picture);
@@ -83,5 +100,6 @@ export class UserController {
 const UpdateBodySchema = z.object({
   username: UsernameSchema.optional(),
   email: EmailSchema.optional(),
-  password: PasswordSchema.optional(),
+  currentPassword: z.string().optional(),
+  newPassword: PasswordSchema.optional(),
 });
