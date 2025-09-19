@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 
 import { fileTypeFromBuffer } from "file-type";
 
+import { HttpError } from "@/errors/http.error";
+
 const MAX_SIZE_MEGABYTE = 3;
 const MAX_SIZE_BYTE = MAX_SIZE_MEGABYTE * 1024 * 1024;
 
@@ -15,21 +17,14 @@ export const pictureMiddleware: RequestHandler = async (req, res, next) => {
   }
 
   if (req.file.size > MAX_SIZE_BYTE) {
-    res.status(413).send({
-      message: `The file size should not exceed ${MAX_SIZE_MEGABYTE}MB.`,
-      error: "Content Too Large",
-    });
-
-    return;
+    throw new HttpError(
+      413,
+      `The file size should not exceed ${MAX_SIZE_MEGABYTE}MB.`,
+    );
   }
 
   if (!(await hasValidFileType(req.file))) {
-    res.status(415).send({
-      message: "Please upload a valid jpg, png or webp image.",
-      error: "Unsupported Media Type",
-    });
-
-    return;
+    throw new HttpError(415, "Please upload a valid jpg, png or webp image.");
   }
 
   next();

@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 
 import jwt from "jsonwebtoken";
 
+import { HttpError } from "@/errors/http.error";
+
 import { TokenPayloadType } from "@/types/token-payload.type";
 
 export const authMiddleware: RequestHandler = (req, res, next) => {
@@ -16,6 +18,6 @@ export const authMiddleware: RequestHandler = (req, res, next) => {
     next();
   } catch {
     res.clearCookie(process.env.TOKEN_KEY!);
-    res.sendStatus(401);
+    throw new HttpError(401);
   }
 };

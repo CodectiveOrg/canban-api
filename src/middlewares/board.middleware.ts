@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import { Board } from "@/entities/board";
 
 export const boardMiddleware: RequestHandler = async (req, res, next) => {
@@ -17,12 +19,7 @@ export const boardMiddleware: RequestHandler = async (req, res, next) => {
   });
 
   if (!board) {
-    res.status(404).json({
-      message: "Board not found.",
-      error: "Not Found",
-    });
-
-    return;
+    throw new HttpError(404, "Board not found.");
   }
 
   res.locals.board = board;

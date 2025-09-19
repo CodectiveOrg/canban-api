@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import { List } from "@/entities/list";
 
 export const listMiddleware: RequestHandler = async (req, res, next) => {
@@ -17,12 +19,7 @@ export const listMiddleware: RequestHandler = async (req, res, next) => {
   });
 
   if (!list) {
-    res.status(404).json({
-      message: "List not found.",
-      error: "Not Found",
-    });
-
-    return;
+    throw new HttpError(404, "List not found.");
   }
 
   res.locals.list = list;

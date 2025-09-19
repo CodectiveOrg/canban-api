@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import { Item } from "@/entities/item";
 
 export const itemMiddleware: RequestHandler = async (req, res, next) => {
@@ -17,12 +19,7 @@ export const itemMiddleware: RequestHandler = async (req, res, next) => {
   });
 
   if (!item) {
-    res.status(404).json({
-      message: "Item not found.",
-      error: "Not Found",
-    });
-
-    return;
+    throw new HttpError(404, "Item not found.");
   }
 
   res.locals.item = item;
