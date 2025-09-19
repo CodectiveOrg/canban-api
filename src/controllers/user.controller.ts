@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import { ResponseDto } from "@/dto/response.dto";
 import { GetUserResponseDto } from "@/dto/user-response.dto";
 
@@ -40,12 +42,7 @@ export class UserController {
     const user = await fetchUserFromToken(res);
 
     if (!user) {
-      res.status(404).json({
-        message: "User not found.",
-        error: "Not Found",
-      });
-
-      return;
+      throw new HttpError(404, "User not found.");
     }
 
     res.json({
@@ -73,12 +70,7 @@ export class UserController {
       );
 
       if (!isPasswordCorrect) {
-        res.status(401).json({
-          message: "Current password is incorrect.",
-          error: "Unauthorized",
-        });
-
-        return;
+        throw new HttpError(401, "Current password is incorrect.");
       }
 
       values.password = await hashPassword(values.newPassword);
