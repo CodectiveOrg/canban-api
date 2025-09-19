@@ -30,7 +30,7 @@ export class Item {
   public description!: string;
 
   @Column({ type: "date", nullable: true, transformer: dueDateTransformer })
-  public dueDate?: string;
+  public dueDate?: string | null;
 
   @ManyToOne(() => List, (list) => list.items, { onDelete: "CASCADE" })
   public list!: List;

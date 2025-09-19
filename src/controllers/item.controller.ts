@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 
 import { z } from "zod";
 
+import { HttpError } from "@/errors/http.error";
+
 import {
   CreateItemResponseDto,
   GetItemResponseDto,
@@ -53,12 +55,7 @@ export class ItemController {
     });
 
     if (!list) {
-      res.status(404).json({
-        message: "List not found.",
-        error: "Not Found",
-      });
-
-      return;
+      throw new HttpError(404, "List not found.");
     }
 
     const maxPosition = await getMaxPositionAmongItems(list.id);
@@ -123,12 +120,7 @@ export class ItemController {
       });
 
       if (!overList) {
-        res.status(404).json({
-          message: "Over list not found.",
-          error: "Not Found",
-        });
-
-        return;
+        throw new HttpError(404, "Over list not found.");
       }
 
       await moveItemToList(activeItem, overList.id);
@@ -140,12 +132,7 @@ export class ItemController {
       });
 
       if (!overItem) {
-        res.status(404).json({
-          message: "Over item not found.",
-          error: "Not Found",
-        });
-
-        return;
+        throw new HttpError(404, "Over item not found.");
       }
 
       await moveItemToList(activeItem, overItem.list.id);
