@@ -13,6 +13,8 @@ import { ResponseDto } from "@/dto/response.dto";
 
 import { Board } from "@/entities/board";
 
+import { BoardService } from "@/services/board.service";
+
 import { fetchUserFromToken } from "@/utils/api.utils";
 import { assignDefinedValues } from "@/utils/object.utils";
 
@@ -23,11 +25,16 @@ import { TitleSchema } from "@/validation/schemas/title.schema";
 export class BoardController {
   private readonly boardRepo: Repository<Board>;
 
+  private readonly boardService: BoardService;
+
   public constructor() {
     this.boardRepo = dataSource.getRepository(Board);
 
+    this.boardService = new BoardService();
+
     this.getAllBoards = this.getAllBoards.bind(this);
     this.createBoard = this.createBoard.bind(this);
+    this.seed = this.seed.bind(this);
     this.getBoard = this.getBoard.bind(this);
     this.updateBoard = this.updateBoard.bind(this);
     this.removeBoard = this.removeBoard.bind(this);
@@ -60,6 +67,12 @@ export class BoardController {
       message: "Board created successfully.",
       result: createdBoard.id,
     });
+  }
+
+  public async seed(_: Request, res: Response<ResponseDto>): Promise<void> {
+    await this.boardService.seedBoard(res.locals.user.username);
+
+    res.json({ message: "Boards created successfully." });
   }
 
   public async getBoard(

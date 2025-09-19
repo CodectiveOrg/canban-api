@@ -10,6 +10,7 @@ export function generateBoardRoutes(): Router {
 
   router.get("/", controller.getAllBoards);
   router.post("/", controller.createBoard);
+  router.post("/seed", controller.seed);
   router.get("/:boardId", boardMiddleware, controller.getBoard);
   router.patch("/:boardId", boardMiddleware, controller.updateBoard);
   router.delete("/:boardId", boardMiddleware, controller.removeBoard);
