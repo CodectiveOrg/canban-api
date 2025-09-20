@@ -14,7 +14,8 @@ COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/tsconfig-paths.json ./
 
 EXPOSE 5000
 
-CMD ["node", "dist/main.js"]
+CMD ["npm", "run", "preview"]
