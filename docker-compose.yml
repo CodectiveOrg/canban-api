@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
+  canban-api:
     build: .
     container_name: canban-api
     depends_on:

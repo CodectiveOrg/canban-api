@@ -27,13 +27,25 @@ Create a `.env` file in the root of the project with values similar to `.env.exa
    ```
 3. View logs:
    ```shell
-   docker compose logs -f api
+   docker compose logs -f canban-api
    ```
 
 ### Volumes
 
 - Postgres data is persisted in the `db_data` volume.
 - Uploaded files are stored in the `file_storage` volume.
+
+### Truncate
+
+```shell
+docker compose exec canban-api npm run truncate
+```
+
+### Seed
+
+```shell
+docker compose exec canban-api npm run seed
+```
 
 ## Option 2: Setup Automatically With Dockerfile
 
@@ -61,6 +73,18 @@ Create a `.env` file in the root of the project with values similar to `.env.exa
    docker run -p 5000:5000 --env-file .env canban-api
    ```
 
+### Truncate
+
+```shell
+docker exec canban-api npm run truncate
+```
+
+### Seed
+
+```shell
+docker exec canban-api npm run seed
+```
+
 ## Option 3: Setup Manually Without Docker
 
 ### Prerequisites
@@ -86,3 +110,15 @@ Create a `.env` file in the root of the project with values similar to `.env.exa
    ```shell
    npm start
    ```
+
+### Truncate
+
+```shell
+npm run truncate
+```
+
+### Seed
+
+```shell
+npm run seed
+```
