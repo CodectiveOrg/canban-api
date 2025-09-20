@@ -13,13 +13,13 @@ type StatusCode = keyof typeof status;
 type ReasonPhrase = (typeof status)[keyof typeof status];
 
 export class HttpError {
+  public statusCode: StatusCode;
   public reasonPhrase: ReasonPhrase;
+  public message: string;
 
-  public constructor(
-    public statusCode: StatusCode,
-    public message?: string,
-  ) {
-    this.reasonPhrase = status[statusCode];
-    this.message = this.message ?? this.reasonPhrase;
+  public constructor(statusCode: StatusCode, message?: string) {
+    this.statusCode = statusCode;
+    this.reasonPhrase = status[this.statusCode];
+    this.message = message ?? this.reasonPhrase;
   }
 }
