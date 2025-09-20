@@ -16,6 +16,7 @@ RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/tsconfig-paths.json ./
 
-EXPOSE 5000
+ENV PORT=5000
+EXPOSE $PORT
 
 CMD ["npm", "run", "preview"]
