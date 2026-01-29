@@ -45,3 +45,8 @@ Use this command to populate database with initial data.
 ```shell
 npm run seed
 ```
+
+## Postman
+
+You can import `canban.postman_collection` file into Postman application and test the API.  
+This file is available in the root of current project.
