@@ -6,7 +6,7 @@
     "start": "tsx src/main.ts",
     "prebuild": "rimraf dist/",
     "build": "tsc",
-    "preview": "node -r tsconfig-paths/register -p tsconfig-paths.json dist/main.js",
+    "preview": "TS_NODE_PROJECT=tsconfig.json node -r tsconfig-paths/register dist/main.js",
     "seed": "tsx src/seed/index.ts",
     "truncate": "tsx src/truncate/index.ts",
     "lint": "eslint .",
@@ -14,23 +14,22 @@
     "prettier:fix": "prettier . --write"
   },
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
-    "@faker-js/faker": "^10.0.0",
+    "@eslint/js": "^9.36.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.0.0",
-    "@types/node": "^24.5.0",
-    "eslint": "^9.35.0",
+    "@types/node": "^24.5.2",
+    "eslint": "^9.36.0",
     "prettier": "^3.6.2",
-    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.44.0"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.0.0",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "cookie-parser": "^1.4.7",
@@ -43,7 +42,8 @@
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "rimraf": "^6.0.1",
-    "typeorm": "^0.3.26",
-    "zod": "^4.1.8"
+    "tsconfig-paths": "^4.2.0",
+    "typeorm": "^0.3.27",
+    "zod": "^4.1.9"
   }
 }
