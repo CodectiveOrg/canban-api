@@ -1,0 +1,13 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: BijanProgrammerWebsites/hub/.github/workflows/deploy-express.yml@master
+    with:
+      process-name: canban-api
+      port: 3010
+    secrets: inherit
