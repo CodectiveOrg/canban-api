@@ -5,8 +5,8 @@
     "dev": "tsx watch src/main.ts",
     "start": "tsx src/main.ts",
     "prebuild": "rimraf dist/",
-    "build": "tsc",
-    "preview": "TS_NODE_PROJECT=tsconfig.json node -r tsconfig-paths/register dist/main.js",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "preview": "node dist/main.js",
     "seed": "tsx src/seed/index.ts",
     "truncate": "tsx src/truncate/index.ts",
     "lint": "eslint .",
@@ -24,6 +24,7 @@
     "@types/node": "^24.5.2",
     "eslint": "^9.36.0",
     "prettier": "^3.6.2",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.44.0"
@@ -42,7 +43,6 @@
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "rimraf": "^6.0.1",
-    "tsconfig-paths": "^4.2.0",
     "typeorm": "^0.3.27",
     "zod": "^4.1.9"
   }
