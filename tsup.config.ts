@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: {
-    main: "src/main.ts",
+    server: "src/server.ts",
     seed: "src/seed/index.ts",
     truncate: "src/truncate/index.ts",
   },

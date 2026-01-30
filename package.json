@@ -2,10 +2,10 @@
   "name": "canban-api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx watch src/main.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "tsup",
-    "start": "node dist/main.js",
-    "preview": "node dist/main.js",
+    "start": "node dist/server.js",
+    "preview": "node dist/server.js",
     "seed": "tsx src/seed/index.ts",
     "truncate": "tsx src/truncate/index.ts",
     "lint": "eslint .",
