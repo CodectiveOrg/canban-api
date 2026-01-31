@@ -25,7 +25,11 @@ Create a `.env` file in the root of the project with values similar to `.env.exa
    ```shell
    npm i
    ```
-3. Start:
+3. Build:
+   ```shell
+   npm run build
+   ```
+4. Start:
    ```shell
    npm start
    ```
