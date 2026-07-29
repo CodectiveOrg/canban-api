@@ -10,8 +10,4 @@ jobs:
     with:
       process-name: canban-api
       port: 3010
-    secrets:
-      SERVER_HOST: ${{secrets.SERVER_HOST}}
-      SERVER_USERNAME: ${{secrets.SERVER_USERNAME}}
-      SERVER_PORT: ${{secrets.SERVER_PORT}}
-      SERVER_SSH_KEY: ${{secrets.SERVER_SSH_KEY}}
+    secrets: inherit
