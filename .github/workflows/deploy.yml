@@ -9,7 +9,7 @@ jobs:
     uses: BijanProgrammerWebsites/hub/.github/workflows/deploy-express.yml@master
     with:
       process-name: canban-api
-      port: 3010
+      port: 3017
     secrets:
       SERVER_HOST: ${{secrets.SERVER_HOST}}
       SERVER_USERNAME: ${{secrets.SERVER_USERNAME}}
