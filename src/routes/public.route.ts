@@ -6,6 +6,7 @@ export function generatePublicRoutes(): Router {
   const router = Router();
   const controller = new PublicController();
 
+  router.get("/health", controller.health);
   router.get("/picture/user/:filename", controller.getPicture("user"));
 
   return router;
