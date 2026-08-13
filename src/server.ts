@@ -38,12 +38,12 @@ async function main(): Promise<void> {
   app.use(cookieParser());
   app.use(cors({ origin: true, credentials: true }));
 
-  app.use("/api/auth", generateAuthRoutes());
-  app.use("/api/board", authMiddleware, generateBoardRoutes());
-  app.use("/api/item", authMiddleware, generateItemRoutes());
-  app.use("/api/list", authMiddleware, generateListRoutes());
-  app.use("/api/public", generatePublicRoutes());
-  app.use("/api/user", authMiddleware, generateUserRoutes());
+  app.use("/auth", generateAuthRoutes());
+  app.use("/board", authMiddleware, generateBoardRoutes());
+  app.use("/item", authMiddleware, generateItemRoutes());
+  app.use("/list", authMiddleware, generateListRoutes());
+  app.use("/public", generatePublicRoutes());
+  app.use("/user", authMiddleware, generateUserRoutes());
 
   app.use(globalErrorHandler);
 

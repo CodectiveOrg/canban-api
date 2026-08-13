@@ -15,7 +15,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/public/picture/user/:filename",
+							"raw": "{{BASE_URL}}/public/picture/user/:filename",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -47,7 +47,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/auth/random",
+							"raw": "{{BASE_URL}}/auth/random",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -75,7 +75,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/auth/sign-up",
+							"raw": "{{BASE_URL}}/auth/sign-up",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -103,7 +103,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/auth/sign-in",
+							"raw": "{{BASE_URL}}/auth/sign-in",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -122,7 +122,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/auth/sign-out",
+							"raw": "{{BASE_URL}}/auth/sign-out",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -141,7 +141,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/auth/verify",
+							"raw": "{{BASE_URL}}/auth/verify",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -199,7 +199,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/user",
+							"raw": "{{BASE_URL}}/user",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -217,7 +217,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/user",
+							"raw": "{{BASE_URL}}/user",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -240,7 +240,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/board",
+							"raw": "{{BASE_URL}}/board",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -267,7 +267,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/board",
+							"raw": "{{BASE_URL}}/board",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -285,7 +285,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/board/seed",
+							"raw": "{{BASE_URL}}/board/seed",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -304,7 +304,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/board/:boardId",
+							"raw": "{{BASE_URL}}/board/:boardId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -338,7 +338,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/board/:boardId",
+							"raw": "{{BASE_URL}}/board/:boardId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -363,7 +363,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/board/:boardId",
+							"raw": "{{BASE_URL}}/board/:boardId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -402,7 +402,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/list",
+							"raw": "{{BASE_URL}}/list",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -420,7 +420,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/list/:listId",
+							"raw": "{{BASE_URL}}/list/:listId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -454,7 +454,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/list/:listId",
+							"raw": "{{BASE_URL}}/list/:listId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -479,7 +479,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/list/:listId",
+							"raw": "{{BASE_URL}}/list/:listId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -513,7 +513,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/list/:listId/move",
+							"raw": "{{BASE_URL}}/list/:listId/move",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -553,7 +553,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/item",
+							"raw": "{{BASE_URL}}/item",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -571,7 +571,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/item/:itemId",
+							"raw": "{{BASE_URL}}/item/:itemId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -605,7 +605,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/item/:itemId",
+							"raw": "{{BASE_URL}}/item/:itemId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -630,7 +630,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/api/item/:itemId",
+							"raw": "{{BASE_URL}}/item/:itemId",
 							"host": [
 								"{{BASE_URL}}"
 							],
@@ -664,7 +664,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/item/:itemId/move",
+							"raw": "{{BASE_URL}}/item/:itemId/move",
 							"host": [
 								"{{BASE_URL}}"
 							],
