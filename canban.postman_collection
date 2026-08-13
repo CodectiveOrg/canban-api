@@ -20,7 +20,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"public",
 								"picture",
 								"user",
@@ -52,7 +51,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"auth",
 								"random"
 							]
@@ -80,7 +78,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"auth",
 								"sign-up"
 							]
@@ -108,7 +105,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"auth",
 								"sign-in"
 							]
@@ -127,7 +123,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"auth",
 								"sign-out"
 							]
@@ -146,7 +141,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"auth",
 								"verify"
 							]
@@ -204,7 +198,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"user"
 							]
 						}
@@ -222,7 +215,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"user"
 							]
 						}
@@ -245,7 +237,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"board"
 							]
 						}
@@ -272,7 +263,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"board"
 							]
 						}
@@ -290,7 +280,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"board",
 								"seed"
 							]
@@ -309,7 +298,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"board",
 								":boardId"
 							],
@@ -343,7 +331,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"board",
 								":boardId"
 							],
@@ -368,7 +355,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"board",
 								":boardId"
 							],
@@ -407,7 +393,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"list"
 							]
 						}
@@ -425,7 +410,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"list",
 								":listId"
 							],
@@ -459,7 +443,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"list",
 								":listId"
 							],
@@ -484,7 +467,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"list",
 								":listId"
 							],
@@ -518,7 +500,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"list",
 								":listId",
 								"move"
@@ -558,7 +539,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"item"
 							]
 						}
@@ -576,7 +556,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"item",
 								":itemId"
 							],
@@ -610,7 +589,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"item",
 								":itemId"
 							],
@@ -635,7 +613,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"item",
 								":itemId"
 							],
@@ -669,7 +646,6 @@
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"api",
 								"item",
 								":itemId",
 								"move"
