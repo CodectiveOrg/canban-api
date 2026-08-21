@@ -20,6 +20,14 @@ export function generateToken(res: Response, payload: TokenPayloadType): void {
   });
 }
 
+export function removeToken(res: Response): void {
+  res.clearCookie(process.env.TOKEN_KEY!, {
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
+  });
+}
+
 export async function hashPassword(password: string): Promise<string> {
   const salt = await bcrypt.genSalt();
   return await bcrypt.hash(password, salt);

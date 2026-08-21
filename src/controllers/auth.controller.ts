@@ -13,7 +13,11 @@ import { ResponseDto } from "@/dto/response.dto";
 import { AuthService } from "@/services/auth.service";
 
 import { selectUserWithPassword } from "@/utils/api.utils";
-import { comparePasswords, generateToken } from "@/utils/auth.utils";
+import {
+  comparePasswords,
+  generateToken,
+  removeToken,
+} from "@/utils/auth.utils";
 import { mapToTokenPayload } from "@/utils/mapper.utils";
 
 import { PasswordSchema } from "@/validation/schemas/password.schema";
@@ -83,7 +87,7 @@ export class AuthController {
   }
 
   public async signOut(_: Request, res: Response<ResponseDto>): Promise<void> {
-    res.clearCookie(process.env.TOKEN_KEY!, { sameSite: "none" });
+    removeToken(res);
 
     res.json({ message: "Signed out successfully." });
   }
