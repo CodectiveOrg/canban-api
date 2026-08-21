@@ -83,7 +83,7 @@ export class AuthController {
   }
 
   public async signOut(_: Request, res: Response<ResponseDto>): Promise<void> {
-    res.clearCookie(process.env.TOKEN_KEY!);
+    res.clearCookie(process.env.TOKEN_KEY!, { sameSite: "none" });
 
     res.json({ message: "Signed out successfully." });
   }
