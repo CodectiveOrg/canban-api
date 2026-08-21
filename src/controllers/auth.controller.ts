@@ -73,12 +73,12 @@ export class AuthController {
     const user = await selectUserWithPassword(username);
 
     if (!user) {
-      throw new HttpError(401, "Username or password is incorrect.");
+      throw new HttpError(401, "Username not found.");
     }
 
     const isPasswordCorrect = await comparePasswords(password, user.password);
     if (!isPasswordCorrect) {
-      throw new HttpError(401, "Username or password is incorrect.");
+      throw new HttpError(401, "Password is incorrect.");
     }
 
     generateToken(res, mapToTokenPayload(user));
