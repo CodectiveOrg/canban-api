@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022"],
+    "types": ["node"],
+    "target": "ES2024",
+    "lib": ["ES2024"],
     "module": "commonjs",
     "rootDir": "./src/",
     "resolveJsonModule": true,
@@ -17,5 +18,7 @@
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "tsup.config.ts"]
 }
