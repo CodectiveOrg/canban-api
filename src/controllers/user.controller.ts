@@ -56,7 +56,7 @@ export class UserController {
     res: Response<ResponseDto>,
   ): Promise<void> {
     const body = UpdateBodySchema.parse(req.body);
-    const user = (await selectUserWithPassword(res.locals.user.username))!;
+    const user = (await selectUserWithPassword({ id: res.locals.user.id }))!;
 
     const values: typeof body & { password?: string } = {
       ...body,

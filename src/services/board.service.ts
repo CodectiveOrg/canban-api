@@ -1,4 +1,4 @@
-import { ILike, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 import { HttpError } from "@/errors/http.error";
 
@@ -16,10 +16,8 @@ export class BoardService {
     this.userRepo = dataSource.getRepository(User);
   }
 
-  public async seedBoard(username: string): Promise<void> {
-    const foundUser = await this.userRepo.findOne({
-      where: [{ username: ILike(username) }],
-    });
+  public async seedBoard(id: number): Promise<void> {
+    const foundUser = await this.userRepo.findOne({ where: { id } });
 
     if (!foundUser) {
       throw new HttpError(404, "User not found");

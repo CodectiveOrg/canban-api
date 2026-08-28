@@ -13,9 +13,9 @@ export async function fetchUserFromToken(
 ): Promise<PasswordlessUser> {
   const userRepo = dataSource.getRepository(User);
 
-  const { username } = res.locals.user;
+  const { id } = res.locals.user;
 
-  const user = await userRepo.findOne({ where: { username: ILike(username) } });
+  const user = await userRepo.findOne({ where: { id } });
 
   if (!user) {
     throw new HttpError(404, "User not found.");
@@ -27,7 +27,7 @@ export async function fetchUserFromToken(
 // NOTE: Since some columns aren't selected by default,
 //       the easiest way to select all columns is to use this method.
 export async function selectUserWithPassword(
-  username: string,
+  fields: { id: number } | { username: string },
 ): Promise<User | null> {
   const userRepo = dataSource.getRepository(User);
 
@@ -35,9 +35,13 @@ export async function selectUserWithPassword(
     (column) => `user.${column.propertyName}`,
   );
 
-  return userRepo
-    .createQueryBuilder("user")
-    .select(columns)
-    .where({ username: ILike(username) })
-    .getOne();
+  const qb = userRepo.createQueryBuilder("user").select(columns);
+
+  if ("id" in fields) {
+    qb.where({ id: fields.id });
+  } else {
+    qb.where({ username: ILike(fields.username) });
+  }
+
+  return qb.getOne();
 }

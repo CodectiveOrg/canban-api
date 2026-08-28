@@ -70,7 +70,7 @@ export class BoardController {
   }
 
   public async seed(_: Request, res: Response<ResponseDto>): Promise<void> {
-    await this.boardService.seedBoard(res.locals.user.username);
+    await this.boardService.seedBoard(res.locals.user.id);
 
     res.json({ message: "Boards created successfully." });
   }

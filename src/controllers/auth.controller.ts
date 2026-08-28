@@ -67,7 +67,7 @@ export class AuthController {
     const body = SignInBodySchema.parse(req.body);
     const { username, password } = body;
 
-    const user = await selectUserWithPassword(username);
+    const user = await selectUserWithPassword({ username });
 
     if (!user) {
       throw new HttpError(401, "Username not found.");
