@@ -4,10 +4,7 @@ import { z } from "zod";
 
 import { HttpError } from "@/errors/http.error";
 
-import {
-  AuthVerifyResponseDto,
-  GenerateRandomUserResponseDto,
-} from "@/dto/auth-response.dto";
+import { GenerateRandomUserResponseDto } from "@/dto/auth-response.dto";
 import { ResponseDto } from "@/dto/response.dto";
 
 import { AuthService } from "@/services/auth.service";
@@ -92,17 +89,14 @@ export class AuthController {
     res.json({ message: "Signed out successfully." });
   }
 
-  public async verify(
-    _: Request,
-    res: Response<AuthVerifyResponseDto>,
-  ): Promise<void> {
+  public async verify(_: Request, res: Response<ResponseDto>): Promise<void> {
     const { user } = res.locals;
 
     if (!user) {
       throw new HttpError(401);
     }
 
-    res.json({ message: "Token is valid.", result: user });
+    res.json({ message: "Token is valid." });
   }
 }
 
