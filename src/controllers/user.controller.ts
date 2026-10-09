@@ -81,6 +81,9 @@ export class UserController {
     if (req.file) {
       await this.fileService.remove(user.picture);
       updatedUser.picture = await this.fileService.save(req.file);
+    } else if (body.picture === "") {
+      await this.fileService.remove(user.picture);
+      updatedUser.picture = null;
     }
 
     await this.userRepo.save(updatedUser);
@@ -94,4 +97,5 @@ const UpdateBodySchema = z.object({
   email: EmailSchema.optional(),
   currentPassword: z.string().optional(),
   newPassword: PasswordSchema.optional(),
+  picture: z.literal("").optional(),
 });
