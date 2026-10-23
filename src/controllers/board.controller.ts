@@ -46,6 +46,7 @@ export class BoardController {
   ): Promise<void> {
     const boards = await this.boardRepo.find({
       where: { user: { id: res.locals.user.id } },
+      order: { createdAt: "ASC" },
     });
 
     res.json({
