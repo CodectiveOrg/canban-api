@@ -86,6 +86,10 @@ export class UserController {
       updatedUser.picture = null;
     }
 
+    if (updatedUser.email === "") {
+      updatedUser.email = null;
+    }
+
     await this.userRepo.save(updatedUser);
 
     res.json({ message: "Profile updated successfully." });
@@ -94,7 +98,7 @@ export class UserController {
 
 const UpdateBodySchema = z.object({
   username: UsernameSchema.optional(),
-  email: EmailSchema.optional(),
+  email: EmailSchema.or(z.literal("")).nullish(),
   currentPassword: z.string().optional(),
   newPassword: PasswordSchema.optional(),
   picture: z.literal("").optional(),
